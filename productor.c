@@ -38,6 +38,14 @@ Productor setProductor(int argc, char* argv[])
     prod.message = "Test message for the productor";
     prod.productorId = 1;
     
+    void* shmem;
+    char* child_message = "messageTest";
+     
+    printf("Child read: %s\n", shmem);
+    memcpy(shmem, child_message, sizeof(child_message));
+    printf("Child wrote: %s\n", shmem);
+
+    
     return prod;
 }
 
