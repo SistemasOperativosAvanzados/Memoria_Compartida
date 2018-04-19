@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 //                   -b --> name of the buffer
 //                   -s --> seconds for the random waiting time
 Productor setProductor(int argc, char* argv[])
-{
+{    
     Productor prod;
     
     for(int i=1; i<argc; i++)
@@ -31,6 +31,5 @@ Productor setProductor(int argc, char* argv[])
     }
     
     prod.message = "Test message for the productor";
-    
     return prod;
 }
