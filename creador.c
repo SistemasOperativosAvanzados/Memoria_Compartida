@@ -11,20 +11,27 @@
 
 int main(int argc, char* argv[])
 {
-  int shmid;
-  char* addr1;
-  key_t key;
-  shmid = shmget(1077,sizeof(struct buffer),IPC_CREAT|SHM_R|SHM_W);
-  printf("shmid = %d",shmid);
-  addr1 = shmat(shmid,0,0);
-  printf("\nIPC SHARED MEMORY");
-  //copying your structure at the shared location.
-  
-  struct buffer myObj;
-  myObj.testMessage = "message";
-  
-  memcpy(addr1,&myObj,sizeof(myObj));
-  printf("\nMESSAGE STORED");
+    int       shm_id;
+    key_t     mem_key;
+    int       *shm_ptr;
+
+    mem_key = ftok(".", 'a');
+    shm_id = shmget(mem_key, 4*sizeof(int), IPC_CREAT | 0666);
+    if (shm_id < 0) {
+        printf("*** shmget error (server) ***\n");
+        exit(1);
+    }
+    
+    printf("Id de la memoria compartida en el creador: %d\n", shm_id);
+
+    shm_ptr = (int *) shmat(shm_id, NULL, 0);  /* attach */
+    if ((int) shm_ptr == -1) {
+        printf("*** shmat error (server) ***\n");
+        exit(1);
+    }
     
 }
+
+
+http://www.csl.mtu.edu/cs4411.ck/www/NOTES/process/shm/example-2.html
 

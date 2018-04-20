@@ -8,19 +8,23 @@
 
 int main(int argc, char* argv[])
 {
-  int shmid;
-  char* addr1;
-  FILE* fp;
-  key_t key;
 
-  struct buffer* myObj2;
-  
-  shmid = shmget(1077,sizeof(struct buffer),SHM_R|SHM_W);
-  addr1 = shmat(shmid,0,0);
-  myObj2 = (struct buffer*)malloc(sizeof(struct buffer)*1);
-  if(shmid == -1)
-    printf("\nShared memory error");
-  //Retrieve the stored information, form the shared location.
-  memcpy(myObj2,addr1,sizeof(struct buffer));
-  printf("mensajillo: %s\n", myObj2->testMessage);
+    int       shm_id;
+    key_t     mem_key;
+    int       *shm_ptr;
+
+    mem_key = ftok(".", 'a');
+    shm_id = shmget(mem_key, 4*sizeof(int), 0666);
+    if (shm_id < 0) {
+        printf("*** shmget error (client) ***\n");
+        exit(1);
+    }
+    
+    printf("Id de la memoria compartida en el consumidor/productor: %d\n", shm_id);
+
+    shm_ptr = (int *) shmat(shm_id, NULL, 0);
+    if ((int) shm_ptr == -1) { /* attach */
+        printf("*** shmat error (client) ***\n");
+        exit(1);
+    }
 }
