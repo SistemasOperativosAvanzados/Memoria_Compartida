@@ -25,13 +25,12 @@ int main(int argc, char* argv[])
     printf("Id de la memoria compartida en el creador: %d\n", shm_id);
 
     shm_ptr = (int *) shmat(shm_id, NULL, 0);  /* attach */
-    if ((int) shm_ptr == -1) {
-        printf("*** shmat error (server) ***\n");
-        exit(1);
-    }
+    // if ((int) shm_ptr == -1) {
+    //     printf("*** shmat error (server) ***\n");
+    //     exit(1);
+    // }
     
 }
 
-
-http://www.csl.mtu.edu/cs4411.ck/www/NOTES/process/shm/example-2.html
+// http://www.csl.mtu.edu/cs4411.ck/www/NOTES/process/shm/example-2.html
 
